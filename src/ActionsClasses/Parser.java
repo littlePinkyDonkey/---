@@ -16,11 +16,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class Parser {
-    public static Map<String,String> isoDecMap = new HashMap<>();
-    public static Map<String,String> isoHexMap = new HashMap<>();
-    public static Map<String,String> isoOctMap = new HashMap<>();
+    public static Map<String,String> decMap = new HashMap<>();
+    public static Map<String,String> hexMap = new HashMap<>();
+    public static Map<String,String> octMap = new HashMap<>();
 
-    public static void parseFile(File file){
+    public static void parseFile(File file, String type){
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
         try{
@@ -40,12 +40,12 @@ public class Parser {
         for (int i = 0; i < nodeList.getLength(); i++){
             if (nodeList.item(i).getNodeType() == Node.ELEMENT_NODE){
                 Element element = (Element)nodeList.item(i);
-                if (element.getElementsByTagName("TYPE").item(0).getTextContent().equals("ISO-8859-5")){
-                    isoDecMap.put(element.getAttribute("char"),
+                if (element.getElementsByTagName("TYPE").item(0).getTextContent().toLowerCase().equals(type)){
+                    decMap.put(element.getAttribute("char"),
                             element.getElementsByTagName("DEC").item(0).getTextContent());
-                    isoHexMap.put(element.getAttribute("char"),
+                    hexMap.put(element.getAttribute("char"),
                             element.getElementsByTagName("HEX").item(0).getTextContent());
-                    isoOctMap.put(element.getAttribute("char"),
+                    octMap.put(element.getAttribute("char"),
                             element.getElementsByTagName("OCT").item(0).getTextContent());
                 }
             }

@@ -6,26 +6,27 @@ import java.util.Scanner;
 
 public class Decoder {
     public static void main(String[] args) {
-        Parser.parseFile(new File("encodings.xml"));
         Scanner scanner = new Scanner(System.in);
         String line;
         String decodeType;
         try {
             for (;;){
-                System.out.println("для выхода нажмите ctrl + D");
+                System.out.println("для выхода нажмите ctrl + D\nСписок доступных кодировок: " +
+                        "iso-8859-5, utf-8");
                 System.out.print("введите строку: ");
                 if (!scanner.hasNextLine()){
                     return;
                 }
                 line = scanner.nextLine();
 
-                System.out.print("введите тип кодировки: ");
+                System.out.print("введите кодировку: ");
                 if (!scanner.hasNextLine()){
                     return;
                 }
                 decodeType = scanner.nextLine();
 
                 if (!line.equals("") && !decodeType.equals("")){
+                    Parser.parseFile(new File("encodings.xml"), decodeType);
                     DecoderSelector.select(line,decodeType.trim().toLowerCase());
                 }else continue;
             }
@@ -35,9 +36,5 @@ public class Decoder {
         }finally {
             scanner.close();
         }
-    }
-
-    public static void showInfo(){
-        System.out.println();
     }
 }

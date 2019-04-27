@@ -5,20 +5,37 @@ import Encodings.*;
 public class DecoderSelector {
 
     public static void select(String string, String decodeSystem){
+        decDecode decDecode = string1 -> {
+            System.out.print("DEC: ");
+            char[] chars = string.toCharArray();
+            for (int i = 0; i < chars.length; i++){
+                String str = Character.toString(chars[i]);
+                System.out.print(Parser.decMap.get(str));
+            }
+        };
+        hexDecode hexDecode = string1 -> {
+            System.out.print("\nHEX: ");
+            char[] chars = string.toCharArray();
+            for (int i = 0; i < chars.length; i++){
+                String str = Character.toString(chars[i]);
+                System.out.print(Parser.hexMap.get(str));
+            }
+        };
+        octDecode octDecode = string1 -> {
+            System.out.print("\nOCT: ");
+            char[] chars = string.toCharArray();
+            for (int i = 0; i < chars.length; i++){
+                String str = Character.toString(chars[i]);
+                System.out.print(Parser.octMap.get(str));
+            }
+            System.out.println();
+        };
         switch (decodeSystem){
             case "iso-8859-5":
-                ISO_8859_5 iso_8859_5 = new ISO_8859_5();
-
-                iso_8859_5.decDecode(string);
-                iso_8859_5.hexDecode(string);
-                iso_8859_5.octDecode(string);
-                break;
             case "utf-8":
-                UTF_8 utf_8 = new UTF_8();
-
-                utf_8.decDecode(string);
-                utf_8.hexDecode(string);
-                utf_8.octDecode(string);
+                decDecode.decDecode(string);
+                hexDecode.hexDecode(string);
+                octDecode.octDecode(string);
                 break;
         }
     }
